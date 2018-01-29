@@ -27,12 +27,31 @@ def CAR(data):
     car = car ** (1 / len(hprs))
     return car
 
-# Parse a csv and return
+#  Accepts CSV files following Yahoo finance's format
+#  Ensure that there are no missing fields in the csv before passing it to the file
+#  Parse a csv and returns a tuple with the following values, in order:
 #   OHCL average array
 #   Opening prices array
 #   High prices array
 #   Closing prices array
 #   Low prices array
-def parse_csv(csv):
-    # To add soon
-    return None
+#   Adjusted close
+#   Volume
+def parse_csv(file_path):
+    items = ([], [], [], [], [], [], [])
+    with open(file_path) as file:
+        reader = csv.reader(file, delimiter=",")
+        reader = list(reader)
+        reader = reader[1:]
+        for row in reader:
+            sum = 0
+            for x in range(1,5):
+                sum = sum + float(row[x])
+            items[0].append(sum/4)
+            items[1].append(float(row[1]))
+            items[2].append(float(row[2]))
+            items[3].append(float(row[3]))
+            items[4].append(float(row[4]))
+            items[5].append(float(row[5]))
+            items[6].append(float(row[6]))
+    return items
